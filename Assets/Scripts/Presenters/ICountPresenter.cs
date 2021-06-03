@@ -1,7 +1,8 @@
 using UniRx;
 namespace SCA
 {
-    //IPresenter
+    // IPresenter
+    // Interface for Presenter
     public interface ICountPresenter
     {
         ReactiveProperty<int> CountA { get; }

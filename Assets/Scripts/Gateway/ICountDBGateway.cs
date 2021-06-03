@@ -1,6 +1,7 @@
 namespace SCA
 {
-    //IGateway
+    // IGateway
+    // Interface for Gateway
     public interface ICountDBGateway
     {
         void SetCount(CountType type, int new_value);

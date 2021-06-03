@@ -3,7 +3,10 @@ using UniRx;
 
 namespace SCA
 {
-    //Presenter
+    // Presenter
+    // Presenter can depend on Usecase through its interface
+    // Presenter can't dependent on View, Gateway
+    // Presenter can inherit Monobehaviour
     public class CountPresenter : MonoBehaviour, ICountPresenter
     {
         public ReactiveProperty<int> CountA { get; private set; } = new ReactiveProperty<int>();

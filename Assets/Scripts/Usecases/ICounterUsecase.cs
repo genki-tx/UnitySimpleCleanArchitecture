@@ -2,7 +2,8 @@ using System;
 
 namespace SCA
 {
-    //IUsecase
+    // IUsecase
+    // Interface for Usecase
     public interface ICounterUsecase
     {
         void IncrementCount(CountType type);

@@ -2,7 +2,10 @@ using System;
 
 namespace SCA
 {
-    //Usecase
+    // Usecase
+    // Usecase can depend on Gateway through its interface.
+    // Usecase can't be dependent on View, Presenter
+    // Usecase can't inherit Monobehaviour
     public class CounterUsecase : ICounterUsecase
     {
         public EventHandler<CounterEventArgs> OnCountChanged { get; set; }

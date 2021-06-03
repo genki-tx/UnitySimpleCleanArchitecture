@@ -5,7 +5,9 @@ namespace SCA
         A, B
     }
 
-    //Entity
+    // Entity
+    // Entity can't depend on View, Presenter, Usecase, Gateway
+    // Entity can't inherit Monobehaviour
     public class Count
     {
         public CountType Type { get; set; } // type of this count

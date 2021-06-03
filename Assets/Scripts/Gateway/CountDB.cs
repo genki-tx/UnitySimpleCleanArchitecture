@@ -1,6 +1,8 @@
 namespace SCA
 {
-    //Gateway
+    // Gateway
+    // Gateway can't depend on View, Presenter, Usecase
+    // Gateway can't inherit Monobehaviour
     public class CountDB : ICountDBGateway
     {
 
