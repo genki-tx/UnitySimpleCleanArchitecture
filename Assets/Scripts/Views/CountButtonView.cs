@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace SCA
 {
@@ -12,15 +13,13 @@ namespace SCA
     {
         public CountType Type;
 
+        [Inject]
         private ICountPresenter _presenter;
         private Button _button;
 
         private void Start()
         {
             _button = GetComponent<Button>();
-
-            _presenter = PresenterDI.CountPresenter;
-
             _button.onClick.AddListener(() => {
                 _presenter.IncrementCount(Type);
             });

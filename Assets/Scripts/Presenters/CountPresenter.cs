@@ -11,13 +11,11 @@ namespace SCA
     {
         public ReactiveProperty<int> CountA { get; private set; } = new ReactiveProperty<int>();
         public ReactiveProperty<int> CountB { get; private set; } = new ReactiveProperty<int>();
-
         private ICounterUsecase _usecase;
 
-        void Start()
+        public void Initialize(ICounterUsecase usecase)
         {
-            _usecase = CounterDI.CounterUsecase;
-
+            _usecase = usecase;
             // Connect callback event to reactive property
             _usecase.OnCountChanged += OnCountChanged;
         }

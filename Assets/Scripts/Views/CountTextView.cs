@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using Zenject;
 
 namespace SCA
 {
@@ -13,6 +14,7 @@ namespace SCA
     {
         public CountType Type;
 
+        [Inject]
         private ICountPresenter _presenter;
         private Text _text;
 
@@ -20,7 +22,6 @@ namespace SCA
         {
             _text = GetComponent<Text>();
 
-            _presenter = PresenterDI.CountPresenter;
             var reactive_property = Type == CountType.A ? _presenter.CountA : _presenter.CountB;
 
             reactive_property.Subscribe((x) =>
