@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
@@ -9,32 +10,50 @@ namespace SCA
     // Presenter can inherit Monobehaviour
     public class CountPresenter : MonoBehaviour, ICountPresenter
     {
-        public ReactiveProperty<int> CountA { get; private set; } = new ReactiveProperty<int>();
-        public ReactiveProperty<int> CountB { get; private set; } = new ReactiveProperty<int>();
-        private ICounterUsecase _usecase;
+        public IReadOnlyReactiveProperty<int> CountA => _countA;
+        private readonly ReactiveProperty<int> _countA = new ReactiveProperty<int>();
+        public IReadOnlyReactiveProperty<int> CountB => _countB;
+        private readonly ReactiveProperty<int> _countB = new ReactiveProperty<int>();
 
-        public void Initialize(ICounterUsecase usecase)
+        // Dependency
+        private ICountUsecase _usecase;
+
+        public void Initialize(ICountUsecase usecase)
         {
             _usecase = usecase;
-            // Connect callback event to reactive property
-            _usecase.OnCountChanged += OnCountChanged;
+
+            // Start subscribing reactive property
+            var disposable = _usecase.Counts.Subscribe((dict) =>
+            {
+                // This lambda-function here will be called when _usecase.Counts reactive property updated
+                UpdateCount(dict);
+            });
+
+            // ... and update initialize by the current value
+            UpdateCount(_usecase.Counts.Value);
+        }
+
+        private void UpdateCount(Dictionary<CountType, Count> dict)
+        {
+            foreach (var element in dict)
+            {
+                switch (element.Key)
+                {
+                    case CountType.A:
+                        _countA.Value = element.Value.Num;
+                        break;
+                    case CountType.B:
+                        _countB.Value = element.Value.Num;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void IncrementCount(CountType type)
         {
             _usecase.IncrementCount(type);
-        }
-
-        void OnCountChanged(object sender, CounterEventArgs event_arg)
-        {
-            if(event_arg.Type == CountType.A)
-            {
-                CountA.Value = event_arg.Count;
-            }
-            else if (event_arg.Type == CountType.B)
-            {
-                CountB.Value = event_arg.Count;
-            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SCA
         {
             // Instantiate objects
             var gateway = new CountDBGateway();
-            var usecase = new CounterUsecase(gateway);
+            var usecase = new CountUsecase(gateway);
             var presenter = gameObject.AddComponent<CountPresenter>();
             presenter.Initialize(usecase); // since presenter inheritates Monobihavior, you can't inject the dependency by constructor
 
@@ -20,7 +20,7 @@ namespace SCA
                 .FromInstance(gateway);
 
             Container
-                .Bind<ICounterUsecase>()
+                .Bind<ICountUsecase>()
                 .FromInstance(usecase);
 
             Container
